@@ -1,5 +1,5 @@
-# ng-used-car-transaction-sys
-基于Angular2+的二手车交易系统
+# used-car-transaction-sys
+二手车交易系统
 
 ## 卖家端
 1. 登录/注册
