@@ -12,6 +12,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { login } from '@/api/user'
 
 const useStyles = makeStyles({
     'card': {
@@ -27,13 +28,23 @@ const useStyles = makeStyles({
     },
     'card__action--btn': {
         width: '250px'
+    },
+    'card__remember_switch': {
+        justifyContent: 'center',
+        marginTop: '20px'
     }
 })
 const LoginCard: React.FC = () => {
     const classes = useStyles()
     const [autoLogin, setAutoLogin] = useState(true);
+    const [tel, setTel] = useState('')
+    const [password, setPassword] = useState('')
     const handleChangeAutoLogin = () => {
         setAutoLogin(!autoLogin)
+    }
+    const handleClickLogin = async () => {
+        const res = await login({ tel, password })
+        console.log(res.data)
     }
     return (
         <>
@@ -45,7 +56,7 @@ const LoginCard: React.FC = () => {
                             <AccountCircle />
                         </Grid>
                         <Grid item>
-                            <TextField label="用户名" />
+                            <TextField value={tel} onChange={e => { setTel(e.target.value) }} label="用户名" />
                         </Grid>
                     </Grid>
                     <Grid container spacing={1} justify="center" alignItems="flex-end">
@@ -53,13 +64,13 @@ const LoginCard: React.FC = () => {
                             <LockIcon />
                         </Grid>
                         <Grid item>
-                            <TextField label="密码" type="password" />
+                            <TextField value={password} onChange={e => { setPassword(e.target.value) }} label="密码" type="password" />
                         </Grid>
                     </Grid>
-                    <FormGroup row>
+                    <FormGroup row className={classes['card__remember_switch']}>
                         <FormControlLabel
                             control={
-                                <Switch checked={autoLogin} value="checkedA" />
+                                <Switch checked={autoLogin} value="checkedA" color="primary" />
                             }
                             onChange={() => { handleChangeAutoLogin() }}
                             label="记住密码"
@@ -67,7 +78,7 @@ const LoginCard: React.FC = () => {
                     </FormGroup>
                 </CardContent>
                 <CardActions className={classes['card__action']}>
-                    <Button className={classes['card__action--btn']} variant="contained" color="primary" size="large">登录</Button>
+                    <Button className={classes['card__action--btn']} variant="contained" color="primary" size="large" onClick={() => handleClickLogin()}>登录</Button>
                 </CardActions>
             </Card>
         </>

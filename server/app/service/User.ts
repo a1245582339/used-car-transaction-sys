@@ -14,7 +14,7 @@ export default class User extends Service {
     public async login(User: Account): Promise<Token> {
         return {
             code: '20000',
-            token: `${User.tel}+${User.password}`,
+            token: `${User.tel}++++${User.password}`,
         };
     }
 }
